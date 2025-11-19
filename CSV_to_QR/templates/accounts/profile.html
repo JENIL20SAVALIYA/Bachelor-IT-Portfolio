@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - QR Code Generator</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            text-align: center;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 20px;
+        }
+        .profile-header h1 {
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #007bff;
+        }
+        .profile-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .profile-info {
+            margin-top: 30px;
+        }
+        .profile-info .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .info-item label {
+            font-weight: 600;
+            color: #333;
+        }
+        .info-item span {
+            color: #555;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .actions a {
+            margin: 10px;
+            display: inline-block;
+            background: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .actions a:hover {
+            background: #0056b3;
+        }
+        .navigation {
+            background: #007bff;
+            color: #fff;
+            padding: 10px;
+        }
+        .navigation a {
+            color: #fff;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+        .profile-avatar {
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h1>{{ user.username }}</h1>
+            <p>Welcome to your profile, {{ user.first_name }} {{ user.last_name }}</p>
+        </div>
+
+        <div class="profile-info">
+            <div class="info-item">
+                <label>Full Name:</label>
+                <span>{{ user.first_name }} {{ user.last_name }}</span>
+            </div>
+            <div class="info-item">
+                <label>Email Address:</label>
+                <span>{{ user.email }}</span>
+            </div>
+            <div class="info-item">
+                <label>Date Joined:</label>
+                <span>{{ user.date_joined|date:"F j, Y" }}</span>
+            </div>
+            <div class="info-item">
+                <label>Last Login:</label>
+                <span>{{ user.last_login|date:"F j, Y, g:i a" }}</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'upload_csv' %}"><i class="fas fa-upload"></i> Upload CSV for QR Codes</a>
+            <a href="{% url 'view_qr_codes' %}"><i class="fas fa-qrcode"></i> View My QR Codes</a>
+            <a href="{% url 'password_reset' %}"><i class="fas fa-key"></i> Reset Password</a>
+        </div>
+    </div>
+</body>
+</html>

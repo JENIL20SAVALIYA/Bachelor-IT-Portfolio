@@ -1,0 +1,72 @@
+<!-- templates/accounts/view_qr_codes.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated QR Codes - QR Code Generator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 70px;
+        }
+        .qr-code-img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .btn-download {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">QR Code Generator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="text-center mb-4">Generated QR Codes</h2>
+        {% if qr_codes %}
+            <div class="row">
+                {% for qr_code in qr_codes %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="{{ MEDIA_URL }}{{ qr_code.filename }}" alt="QR Code" class="qr-code-img mb-3">
+                                <h5 class="card-title">{{ qr_code.filename }}</h5>
+                                <a href="{% url 'download_qr_code' qr_code.id %}" class="btn btn-primary btn-download">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="{% url 'download_all_qr_codes' %}" class="btn btn-success mt-4">Download All as ZIP</a>
+        {% else %}
+            <p class="text-center">No QR codes available. Please upload a CSV to generate QR codes.</p>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
